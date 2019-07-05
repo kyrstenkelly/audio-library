@@ -5,7 +5,6 @@ import teal from '@material-ui/core/colors/teal';
 import blueGrey from '@material-ui/core/colors/blueGrey';
 import React from 'react';
 import Header from './components/header';
-import styles from './app.scss';
 
 const theme = createMuiTheme({
   palette: {
