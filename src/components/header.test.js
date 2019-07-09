@@ -1,4 +1,4 @@
-import { shallowWithTheme } from '../helpers/test-helper';
+import { shallowWithTheme } from '../helpers/tests';
 import Header from './header';
 
 it('renders correctly', () => {

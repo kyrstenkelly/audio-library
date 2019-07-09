@@ -1,7 +1,15 @@
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { actionsBinder } from '../helpers/actions';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  Paper
+} from '@material-ui/core';
+import { connectWithStyles } from '../helpers/components';
+import styles from './header.styles';
 
 const mapStateToProps = (state) => ({
   tracks: state.tracks,
@@ -9,10 +17,11 @@ const mapStateToProps = (state) => ({
   error: state.error
 });
 
-const mapDispatchToProps = actionsBinder('getTracks');
+const dispatch = ['getTracks'];
 
 export class TrackList extends Component {
   static propTypes = {
+    classes: PropTypes.object.isRequired,
     tracks: PropTypes.array,
     loading: PropTypes.bool,
     error: PropTypes.string,
@@ -24,7 +33,12 @@ export class TrackList extends Component {
   }
 
   render() {
-    const { error, loading, tracks } = this.props;
+    const {
+      classes,
+      error,
+      loading,
+      tracks
+    } = this.props;
 
     return (
       <div>
@@ -37,18 +51,33 @@ export class TrackList extends Component {
         }
 
         {!error && !loading &&
-          <ul>
-            {tracks.map(track =>
-              <li key={track.title}>{track.title}</li>
-            )}
-          </ul>
+          <Paper className={classes.root}>
+            <Table className={classes.table}>
+              <TableHead>
+                <TableRow>
+                  <TableCell>Track</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {tracks.map(track =>
+                  <TableRow key={track.title}>
+                    <TableCell component="th" scope="row">
+                      {track.title}
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </Paper>
         }
       </div>
     );
   }
 }
 
-export default connect(
+export default connectWithStyles(
+  styles,
   mapStateToProps,
-  mapDispatchToProps
-)(TrackList);
+  dispatch,
+  TrackList
+);
