@@ -1,42 +1,41 @@
 import Actions from '../actions';
 
-// Got this handy-dandy middleware from
-// https://codeburst.io/minimal-code-for-redux-async-actions-c47ea85f2141
+/**
+ * Got this handy-dandy middleware from
+ * https://codeburst.io/minimal-code-for-redux-async-actions-c47ea85f2141
+ *
+ * Slightly modified to remove seemingly pointless promises and tidy code.
+ */
 export const inProgressTypeName = (basicActionName) => `${basicActionName}_IN_PROGRESS`;
 export const successTypeName = (basicActionName) => `${basicActionName}_SUCCESS`;
 export const errorTypeName = (basicActionName) => `${basicActionName}_ERROR`;
 
-export const asyncMiddleware = store => next => action => {
-  const isActionAsync = action.hasOwnProperty('async');
-  if (!isActionAsync) {
+export const asyncMiddleware = store => next => async action => {
+  if (!action.hasOwnProperty('async')) {
     return next(action);
-  }
-  else {
-    const {httpMethod, params, type} = action;
-    const handleError = (error) => {
-      console.log(error);
-      const errorType = errorTypeName(type);
-      if (error.message === 'Failed to fetch') {
-        error = `Failed to fetch data for ${type} request`;
-      }
-      Promise.resolve(1).then(() => store.dispatch({type: errorType, error}));
+  } else {
+    const { httpMethod, params, type } = action;
+
+    const handleError = async (error) => {
+      store.dispatch({
+        type: errorTypeName(type),
+        error
+      });
     }
-    const inProgressType = inProgressTypeName(type);
-    // The resolved promise here is to make sure the action fired here comes
-    // after firing original action for example:
-    // getData => getDataInProgress and not the other way round. hack suggested in redux forums.
-    Promise.resolve(1).then(() => store.dispatch({type: inProgressType}));
+
+    store.dispatch({type: inProgressTypeName(type)});
+
     httpMethod(...params)
       .then(resp => {
         if (resp.error) {
           handleError(resp.error);
           return next(action);
         }
-        const successType = successTypeName(type);
-        Promise.resolve(1).then(() => store.dispatch({
-          type: successType,
+
+        store.dispatch({
+          type: successTypeName(type),
           ...resp
-        }));
+        });
       })
       .catch(error => handleError(error));
 
