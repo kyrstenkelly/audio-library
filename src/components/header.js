@@ -12,7 +12,7 @@ const Header = () => {
   const classes = makeStyles();
 
   return (
-    <AppBar position='fixed'>
+    <AppBar position='static'>
       <Toolbar variant='dense' className={classes.toolbar}>
         <IconButton
           edge='start'

@@ -1,9 +1,11 @@
-import { createMuiTheme } from '@material-ui/core/styles';
-import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import teal from '@material-ui/core/colors/teal';
-import blueGrey from '@material-ui/core/colors/blueGrey';
 import React from 'react';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import blueGrey from '@material-ui/core/colors/blueGrey';
+import teal from '@material-ui/core/colors/teal';
+import { createMuiTheme } from '@material-ui/core/styles';
+
+import AudioPlayer from './views/audio-player';
 import Header from './components/header';
 
 const theme = createMuiTheme({
@@ -33,6 +35,8 @@ function App() {
     <MuiThemeProvider theme={theme}>
       <CssBaseline/>
       <Header/>
+
+      <AudioPlayer/>
     </MuiThemeProvider>
   );
 }

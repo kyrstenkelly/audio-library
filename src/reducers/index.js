@@ -1,14 +1,14 @@
-import types from 'actions/types';
+import types from '../actions/types';
 import {
   inProgressTypeName,
   successTypeName,
   errorTypeName
-} from 'helpers/actions';
+} from '../helpers/actions';
 
 const initialState = {
   tracks: [],
   loading: false,
-  error: false
+  error: null
 };
 
 function tracksReducer(state = initialState, action) {
@@ -21,7 +21,7 @@ function tracksReducer(state = initialState, action) {
     case successTypeName(types.GET_TRACKS):
       return {
         ...state,
-        tracks: action.payload,
+        tracks: action.tracks,
         loading: false
       };
     case errorTypeName(types.GET_TRACKS):

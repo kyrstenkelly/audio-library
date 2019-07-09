@@ -1,4 +1,4 @@
-import Actions from 'actions';
+import Actions from '../actions';
 
 // Got this handy-dandy middleware from
 // https://codeburst.io/minimal-code-for-redux-async-actions-c47ea85f2141

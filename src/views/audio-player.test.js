@@ -1,7 +1,7 @@
 import { shallowWithTheme } from '../helpers/test-helper';
-import Header from './header';
+import AudioPlayer from './audio-player';
 
 it('renders correctly', () => {
-  const wrapper = shallowWithTheme(Header);
+  const wrapper = shallowWithTheme(AudioPlayer);
   expect(wrapper).toMatchSnapshot();
 });

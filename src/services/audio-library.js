@@ -17,7 +17,8 @@ const tracks = [{
 
 export default {
   getTracks: async () => {
-    console.log('GETTING TRACKS');
-    return new Promise.resolve(tracks)
+    return new Promise((resolve, _) => {
+      resolve({ tracks });
+    });
   }
 }
