@@ -11,6 +11,6 @@ export default theme => ({
   },
   logoIcon: {
     marginRight: theme.spacing(1),
-    color: theme.palette.secondary.light
+    color: theme.palette.secondary.main
   }
 });

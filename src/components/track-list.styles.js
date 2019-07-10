@@ -8,6 +8,9 @@ export default theme => ({
     backgroundColor: theme.palette.primary.main,
     '& th': {
       borderColor: 'rgba(255, 255, 255, 0.4)'
+    },
+    '& td': {
+      padding: theme.spacing(2)
     }
   },
   tableHead: {
