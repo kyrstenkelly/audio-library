@@ -7,5 +7,12 @@ export default {
     async: true,
     httpMethod: audioLibraryService.getTracks,
     params: []
-  })
+  }),
+
+  playTrack: (fileName) => ({
+    type: Types.PLAY_TRACK,
+    payload: fileName
+  }),
+
+  pause: () => ({ type: Types.PAUSE })
 }
