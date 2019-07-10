@@ -1,4 +1,10 @@
-# Audio Web Player
+# Audio Library Web
+
+A web player that interacts with the [Audio Player API](https://github.com/kyrstenkelly/audio-library-api).
+
+
+You can see it live at https://audio-library.herokuapp.com!
+
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
