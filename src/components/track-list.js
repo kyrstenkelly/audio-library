@@ -80,7 +80,7 @@ class TrackList extends Component {
             {tracks.map(track =>
               <TableRow key={track.title} onDoubleClick={() => this.props.playTrack(track)}>
                 {/* On mobile, put most track info in one cell so we can format vertically */}
-                <TableCell className={classes.mobileTrackInfo}>
+                <TableCell className={classes.mobileTrackInfo} onClick={() => this.playPauseTrack(track)}>
                   <span className={classes.mobileTrackInfo__title}>{track.title}</span>
                   <span className={classes.mobileTrackInfo__artist_album}>
                     <span>{track.artist}</span>
@@ -107,7 +107,7 @@ class TrackList extends Component {
                 <TableCell className={classes.desktopTrackInfo}>{track.title}</TableCell>
                 <TableCell className={classes.desktopTrackInfo}>{track.artist}</TableCell>
                 <TableCell className={classes.desktopTrackInfo}>{track.album}</TableCell>
-                <TableCell className={classes.desktopTrackInfo}>{track.duration}</TableCell>
+                <TableCell className={classes.desktopTrackInfo}>{track.durationLabel}</TableCell>
               </TableRow>
             )}
           </TableBody>

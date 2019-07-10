@@ -19,7 +19,7 @@ const structureTrackData = (state, tracks) => {
     if (track.duration) {
       const minutes = Math.floor(track.duration / minuteSeconds);
       const seconds = Math.floor(track.duration % minuteSeconds);
-      track.duration = `${minutes}:${seconds}`;
+      track.durationLabel = `${minutes}:${seconds}`;
     }
     return track;
   });

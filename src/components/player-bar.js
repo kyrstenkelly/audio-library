@@ -38,10 +38,22 @@ class PlayerBar extends Component {
     playing: PropTypes.bool.isRequired,
   }
 
+  state = {
+    playProgress: 0
+  }
+
   componentDidMount() {
     // Play the next song when current one ends
     this._audio.onended = () => {
       this.props.nextTrack();
+    }
+
+    this._audio.ontimeupdate = () => {
+      const current = this._audio.currentTime;
+      const total = this.props.currentTrack.duration;
+      this.setState({
+        playProgress: ((current / total) * 100).toFixed(2)
+      });
     }
   }
 
@@ -85,6 +97,13 @@ class PlayerBar extends Component {
 
     return (
       <AppBar position='static' className={classes.root}>
+        <div className={classes.progressBarContainer}>
+          <div
+            className={classes.progressBar}
+            style={{width: `${this.state.playProgress}%`}}
+          ></div>
+        </div>
+
         <div className={classes.songInfo}>
           <Typography variant='h6'>{currentTrack && currentTrack.title}</Typography>
         </div>
