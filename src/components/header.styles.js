@@ -1,6 +1,4 @@
-import { makeStyles } from '@material-ui/styles';
-
-export default makeStyles(theme => ({
+export default theme => ({
   toolbar: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -15,4 +13,4 @@ export default makeStyles(theme => ({
     marginRight: theme.spacing(1),
     color: theme.palette.secondary.light
   }
-}));
+});

@@ -11,6 +11,19 @@ const initialState = {
   error: null
 };
 
+const structureTrackData = (tracks) => {
+  const minuteSeconds = 60;
+  const newtracks = tracks.map(track => {
+    if (track.duration) {
+      const minutes = Math.floor(track.duration / minuteSeconds);
+      const seconds = Math.floor(track.duration % minuteSeconds);
+      track.duration = `${minutes}:${seconds}`;
+    }
+    return track;
+  });
+  return newtracks;
+}
+
 function tracksReducer(state = initialState, action) {
   switch (action.type) {
     case inProgressTypeName(types.GET_TRACKS):
@@ -21,7 +34,7 @@ function tracksReducer(state = initialState, action) {
     case successTypeName(types.GET_TRACKS):
       return {
         ...state,
-        tracks: action.tracks,
+        tracks: structureTrackData(action.tracks),
         loading: false
       };
     case errorTypeName(types.GET_TRACKS):

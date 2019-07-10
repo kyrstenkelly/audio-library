@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import {
   Table,
@@ -8,8 +9,9 @@ import {
   TableRow,
   Paper
 } from '@material-ui/core';
-import { connectWithStyles } from '../helpers/components';
-import styles from './header.styles';
+import { withStyles } from '@material-ui/styles';
+import { actionsBinder } from '../helpers/actions';
+import styles from './track-list.styles';
 
 const mapStateToProps = (state) => ({
   tracks: state.tracks,
@@ -17,7 +19,7 @@ const mapStateToProps = (state) => ({
   error: state.error
 });
 
-const dispatch = ['getTracks'];
+const mapDispatchToProps = actionsBinder('getTracks');
 
 export class TrackList extends Component {
   static propTypes = {
@@ -30,6 +32,30 @@ export class TrackList extends Component {
 
   componentDidMount() {
     this.props.getTracks();
+  }
+
+  renderTrackRow(track) {
+    const { classes } = this.props;
+
+    return (
+      <TableRow key={track.title}>
+        {/* One table cell for mobile so we can display info vertically */}
+        <TableCell className={classes.mobileTrackInfo}>
+          <span className={classes.mobileTrackInfo__title}>{track.title}</span>
+          <span className={classes.mobileTrackInfo__artist_album}>
+            <span>{track.artist}</span>
+            {track.album && <span className={classes.separator}>&#183;</span>}
+            {track.album && <span>{track.album}</span>}
+          </span>
+        </TableCell>
+
+        {/* Normal table cells for tablet+ */}
+        <TableCell className={classes.desktopTrackInfo}>{track.title}</TableCell>
+        <TableCell className={classes.desktopTrackInfo}>{track.artist}</TableCell>
+        <TableCell className={classes.desktopTrackInfo}>{track.album}</TableCell>
+        <TableCell className={classes.desktopTrackInfo}>{track.duration}</TableCell>
+      </TableRow>
+    );
   }
 
   render() {
@@ -53,19 +79,17 @@ export class TrackList extends Component {
         {!error && !loading &&
           <Paper className={classes.root}>
             <Table className={classes.table}>
-              <TableHead>
+              <TableHead className={classes.tableHead}>
                 <TableRow>
-                  <TableCell>Track</TableCell>
+                  <TableCell className={classes.trackTitle}>Title</TableCell>
+                  <TableCell className={classes.trackArtist}>Artist</TableCell>
+                  <TableCell className={classes.trackAlbum}>Album</TableCell>
+                  <TableCell className={classes.trackDuration}>Duration</TableCell>
                 </TableRow>
               </TableHead>
+
               <TableBody>
-                {tracks.map(track =>
-                  <TableRow key={track.title}>
-                    <TableCell component="th" scope="row">
-                      {track.title}
-                    </TableCell>
-                  </TableRow>
-                )}
+                {tracks.map(t => this.renderTrackRow(t))}
               </TableBody>
             </Table>
           </Paper>
@@ -75,9 +99,7 @@ export class TrackList extends Component {
   }
 }
 
-export default connectWithStyles(
-  styles,
+export default connect(
   mapStateToProps,
-  dispatch,
-  TrackList
-);
+  mapDispatchToProps
+)(withStyles(styles)(TrackList));

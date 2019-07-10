@@ -1,12 +1,50 @@
-import { makeStyles } from '@material-ui/styles';
-
-export default makeStyles(theme => ({
+export default theme => ({
   root: {
     width: '100%',
     marginTop: theme.spacing(3),
-    overflowX: 'auto',
+    fontWeight: 300
   },
   table: {
-    minWidth: 650,
+    backgroundColor: theme.palette.primary.main,
+    '& th': {
+      borderColor: 'rgba(255, 255, 255, 0.4)'
+    }
   },
-}));
+  tableHead: {
+    display: 'none'
+  },
+  mobileTrackInfo: {
+    display: 'flex',
+    flexDirection: 'column'
+  },
+  mobileTrackInfo__title: {
+    fontSize: '1rem',
+    fontWeight: 500,
+    letterSpacing: '.5px',
+    marginBottom: '5px'
+  },
+  mobileTrackInfo__artist_album: {
+    '& span': {
+      display: 'inline-block'
+    }
+  },
+  separator: {
+    marginRight: '5px',
+    marginLeft: '5px'
+  },
+  desktopTrackInfo: {
+    display: 'none'
+  },
+  // Styling for tablet and up
+  [theme.breakpoints.up('sm')]: {
+    tableHead: {
+      display: 'table-header-group'
+    },
+    mobileTrackInfo: {
+      display: 'none'
+    },
+    desktopTrackInfo: {
+      display: 'table-cell'
+    }
+  }
+});

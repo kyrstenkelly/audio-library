@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import {
   AppBar,
   IconButton,
@@ -8,13 +9,12 @@ import {
 import {
   AccountCircle,
   Headset,
-  MenuIcon
+  Menu
 } from '@material-ui/icons';
-import makeStyles from './header.styles';
+import { withStyles } from '@material-ui/styles';
+import styles from './header.styles';
 
-const Header = () => {
-  const classes = makeStyles();
-
+const Header = ({ classes }) => {
   return (
     <AppBar position='static'>
       <Toolbar variant='dense' className={classes.toolbar}>
@@ -23,7 +23,7 @@ const Header = () => {
           color='inherit'
           aria-label='Menu'
         >
-          <MenuIcon />
+          <Menu />
         </IconButton>
 
         <span className={classes.logo}>
@@ -45,4 +45,8 @@ const Header = () => {
   );
 }
 
-export default Header;
+Header.propTypes = {
+  classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(Header);
