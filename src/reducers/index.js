@@ -21,18 +21,36 @@ const structureTrackData = (state, tracks) => {
       const seconds = Math.floor(track.duration % minuteSeconds);
       track.duration = `${minutes}:${seconds}`;
     }
-    // Add "playing" property based on currentTrack state
-    track.playing = state.playing && track.filename === state.currentTrack.filename;
     return track;
   });
 }
 
-const updateTracks = (tracks, currentTrack, playing) => {
-  const currentTrackPlaying = !!currentTrack & playing;
-  return tracks.map(track => ({
-    ...track,
-    playing: currentTrackPlaying && track.filename === currentTrack.filename
-  }));
+const getPreviousTrack = (currentTrack, tracks) => {
+  let newIndex = 0;
+  if (currentTrack) {
+    // TODO: Add unique ID on track metadata to prevent filename clashes
+    const currentTrackIndex = tracks.findIndex(track =>
+      track.filename === currentTrack.filename);
+    newIndex = currentTrackIndex - 1;
+    if (newIndex < 0) {
+      newIndex = tracks.length - 1;
+    }
+  }
+  return tracks[newIndex];
+}
+
+const getNextTrack = (currentTrack, tracks) => {
+  let newIndex = 0;
+  if (currentTrack) {
+    // TODO: Add unique ID on track metadata to prevent filename clashes
+    const currentTrackIndex = tracks.findIndex(track =>
+      track.filename === currentTrack.filename);
+    newIndex = currentTrackIndex + 1;
+    if (newIndex > tracks.length - 1) {
+      newIndex = 0;
+    }
+  }
+  return tracks[newIndex];
 }
 
 function tracksReducer(state = initialState, action) {
@@ -59,14 +77,22 @@ function tracksReducer(state = initialState, action) {
       return {
         ...state,
         playing: true,
-        tracks: updateTracks(state.tracks, currentTrack, true),
         currentTrack
+      };
+    case types.PREVIOUS_TRACK:
+      return {
+        ...state,
+        currentTrack: getPreviousTrack(state.currentTrack, state.tracks)
+      };
+    case types.NEXT_TRACK:
+      return {
+        ...state,
+        currentTrack: getNextTrack(state.currentTrack, state.tracks)
       };
     case types.PAUSE:
       return {
         ...state,
-        playing: false,
-        tracks: updateTracks(state.tracks, state.currentTrack, false)
+        playing: false
       };
     default:
       return state;

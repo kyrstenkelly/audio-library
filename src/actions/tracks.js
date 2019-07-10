@@ -14,5 +14,9 @@ export default {
     payload: fileName
   }),
 
-  pause: () => ({ type: Types.PAUSE })
+  pause: () => ({ type: Types.PAUSE }),
+
+  previousTrack: () => ({ type: Types.PREVIOUS_TRACK }),
+
+  nextTrack: () => ({ type: Types.NEXT_TRACK})
 }

@@ -47,14 +47,14 @@ class TrackList extends Component {
   }
 
   playPauseTrack(track) {
-    if (track.playing) {
+    if (this.trackIsPlaying(track)) {
       this.props.pause();
     } else {
       this.props.playTrack(track);
     }
   }
 
-  isTrackPlaying (track) {
+  trackIsPlaying(track) {
     return this.props.currentTrack && this.props.playing
       && track.filename === this.props.currentTrack.filename;
   }
@@ -97,7 +97,7 @@ class TrackList extends Component {
                     aria-label='Play'
                     onClick={() => this.playPauseTrack(track)}
                   >
-                    {this.isTrackPlaying(track) ?
+                    {this.trackIsPlaying(track) ?
                       <Pause />
                       :
                       <PlayArrow />

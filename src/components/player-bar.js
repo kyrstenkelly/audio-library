@@ -25,17 +25,24 @@ const mapStateToProps = (state) => ({
   playing: state.playing
 });
 
-const mapDispatchToProps = actionsBinder('playTrack', 'pause'/*, 'nextTrack', 'previousTrack'*/);
+const mapDispatchToProps = actionsBinder('playTrack', 'pause', 'nextTrack', 'previousTrack');
 
 class PlayerBar extends Component {
   static propTypes = {
     classes: PropTypes.object.isRequired,
     currentTrack: TrackType,
-    // nextTrack: PropTypes.func.isRequired,
-    // previousTrack: PropTypes.func.isRequired,
+    nextTrack: PropTypes.func.isRequired,
+    previousTrack: PropTypes.func.isRequired,
     playTrack: PropTypes.func.isRequired,
     pause: PropTypes.func.isRequired,
     playing: PropTypes.bool.isRequired,
+  }
+
+  componentDidMount() {
+    // Play the next song when current one ends
+    this._audio.onended = () => {
+      this.props.nextTrack();
+    }
   }
 
   componentWillReceiveProps(newProps) {
