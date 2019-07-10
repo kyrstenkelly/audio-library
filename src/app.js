@@ -5,8 +5,9 @@ import blueGrey from '@material-ui/core/colors/blueGrey';
 import teal from '@material-ui/core/colors/teal';
 import { createMuiTheme } from '@material-ui/core/styles';
 
-import AudioPlayer from './views/audio-player';
 import Header from './components/header';
+import TrackList from './components/track-list';
+import PlayerBar from './components/player-bar';
 
 const theme = createMuiTheme({
   palette: {
@@ -35,7 +36,8 @@ function App() {
       <CssBaseline/>
       <Header/>
 
-      <AudioPlayer/>
+      <TrackList />
+      <PlayerBar />
     </MuiThemeProvider>
   );
 }

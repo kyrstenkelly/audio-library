@@ -4,6 +4,5 @@ export const TrackType = PropTypes.shape({
   title: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
   duration: PropTypes.string.isRequired,
-  album: PropTypes.string,
-  playing: PropTypes.boolean
+  album: PropTypes.string
 })
