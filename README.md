@@ -1,6 +1,6 @@
 # Audio Library Web
 
-A web player that interacts with the [Audio Player API](https://github.com/kyrstenkelly/audio-library-api).
+A web player that interacts with the [Audio Library API](https://github.com/kyrstenkelly/audio-library-api).
 
 
 You can see it live at https://audio-library.herokuapp.com!
